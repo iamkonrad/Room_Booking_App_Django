@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,12 +29,10 @@
 </head>
 <body>
 <!-- Nav -->
-
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand mr-auto" href="#"></a>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #195AC0;">
+  <a class="navbar-brand mr-auto" href="http://127.0.0.1:8000/"></a>
   <div class="mx-auto">
-    <a class="navbar-brand" href="#" style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 24px; font-weight: lighter; letter-spacing: 1px; text-decoration: none; color: white;">
+    <a class="navbar-brand" href="http://127.0.0.1:8000/" style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 24px; font-weight: lighter; letter-spacing: 1px; text-decoration: none; color: white;">
       Room Booking System
     </a>
   </div>
@@ -41,12 +41,12 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav ml-auto">
-      <a class="nav-item nav-link active" href="/">
-        <button class="btn btn-primary">Room list</button>
+      <a class="nav-item nav-link active" href="http://127.0.0.1:8000/">
+        <button class="btn btn-primary" style="border: 1px outset white;">Room list</button>
         <span class="sr-only">(current)</span>
       </a>
       <a class="nav-item nav-link" href="/room/new/">
-        <button class="btn btn-primary">Add a room</button>
+        <button class="btn btn-primary" style="border: 1px outset white;">Add a room</button>
       </a>
     </div>
   </div>
@@ -82,9 +82,9 @@
         <td class="col-2" style="color:green;">Available</td>
       {% endif %}
       {% if room.projector_availability %}
-        <td class="col-2" style="color:green;">&#9745;</td>
+        <td class="col-2" style="color:green;">&#10004;</td>
       {% else %}
-        <td class="col-2" style="color:red;">&#9746;</td>
+        <td class="col-2" style="color:red;">&#10060;</td>
       {% endif %}
       <td class="col-1">
         <a href="/room/modify/{{ room.id }}/">edit</a>
@@ -122,13 +122,14 @@
         <input type="checkbox" class="form-check-input" name="projector" id="projector">
         <label class="form-check-label" for="projector">Projector availability.</label>
       </div>
-      <button type="submit" class="btn btn-primary search-button">Search</button>
+        <button type="submit" class="btn btn-primary search-button" style="border: 3px ridge white;">Search</button>
     </form>
   </div>
 </div>
 <!-- Form -->
 
 <!-- Footer -->
+
 <footer class="footer">
       <div class="container">
         <span class="text-muted">Created by: iam.konrad</span>

@@ -25,7 +25,6 @@ class AddRoomView(View):
         ConferenceRoom.objects.create(name=name, capacity=capacity, projector_availability=projector)
         return redirect("room-list")
 
-
 class RoomListView(View):
     def get(self, request):
         rooms = ConferenceRoom.objects.all()
@@ -84,16 +83,18 @@ class ReservationView(View):
 
         reservations = room.roomreservation_set.filter(date__gte=str(datetime.date.today())).order_by('date')
 
-        if RoomReservation.objects.filter(room=room, date=date):
+        date_object = datetime.datetime.strptime(date, '%Y-%m-%d').date()
+
+        if RoomReservation.objects.filter(room_id=room.id, date=date):
             return render(request, "reservation.html", context={"room": room,
                                                                 "reservations": reservations,
                                                                 "error": "This room has already been booked!"})
-        if date < str(datetime.date.today()):
+        if date_object < datetime.date.today():
             return render(request, "reservation.html", context={"room": room,
                                                                 "reservations": reservations,
                                                                 "error": "Incorrect date."})
 
-        RoomReservation.objects.create(room=room, date=date, comment=comment)
+        RoomReservation.objects.create(room_id=room.id, date=date, comment=comment)
         return redirect("room-list")
 
 
@@ -103,7 +104,7 @@ class RoomDetailsView(View):
         reservations = room.roomreservation_set.filter(date__gte=str(datetime.date.today())).order_by('date')
         return render(request, "room_details.html", context={"room": room, "reservations": reservations})
 
-
+    
 class SearchView(View):
     def get(self, request):
         name = request.GET.get("room-name")

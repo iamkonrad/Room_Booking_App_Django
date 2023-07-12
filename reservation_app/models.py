@@ -8,11 +8,11 @@ class ConferenceRoom(models.Model):
     projector_availability=models.BooleanField(default=False)
 
 class RoomReservation(models.Model):
-    room_id = models.ForeignKey(ConferenceRoom,on_delete=models.CASCADE)
+    room_id = models.ForeignKey(ConferenceRoom, on_delete=models.CASCADE)
     date=models.DateField()
     comment=models.TextField(null=True)
 
-class Meta:
-    unique_together = ('room_id','date',)
+    class Meta:
+        unique_together = ('room_id','date',)
 
 
