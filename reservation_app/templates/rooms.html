@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home Page</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer/">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <style>
+    .footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 60px; /* Set the fixed height of the footer here */
+      line-height: 60px; /* Vertically center the text there */
+      background-color: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+<!-- Nav -->
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand mr-auto" href="#"></a>
+  <div class="mx-auto">
+    <a class="navbar-brand" href="#" style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 24px; font-weight: lighter; letter-spacing: 1px; text-decoration: none; color: white;">
+      Room Booking System
+    </a>
+  </div>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav ml-auto">
+      <a class="nav-item nav-link active" href="/">
+        <button class="btn btn-primary">Room list</button>
+        <span class="sr-only">(current)</span>
+      </a>
+      <a class="nav-item nav-link" href="/room/new/">
+        <button class="btn btn-primary">Add a room</button>
+      </a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- Nav -->
+
+<!-- table -->
+<table class="table">
+  <thead>
+    <tr class="d-flex">
+      <th scope="col" class="col-1">#</th>
+      <th scope="col" class="col-2">Name</th>
+      <th scope="col" class="col-1">Capacity</th>
+      <th scope="col" class="col-2">Room availability</th>
+      <th scope="col" class="col-5" colspan="4">Projector availability</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for room in rooms %}
+    <tr class="d-flex">
+      <th scope="row" class="col-1">{{ room.id }}</th>
+      <td class="col-2">
+        <a href="/room/{{ room.id }}/">{{ room.name }}</a>
+      </td>
+      <td class="col-1">{{ room.capacity }}</td>
+      {% if room.reserved %}
+        <td class="col-2" style="color:red;">Booked</td>
+      {% else %}
+        <td class="col-2" style="color:green;">Available</td>
+      {% endif %}
+      {% if room.projector_availability %}
+        <td class="col-2" style="color:green;">&#9745;</td>
+      {% else %}
+        <td class="col-2" style="color:red;">&#9746;</td>
+      {% endif %}
+      <td class="col-1">
+        <a href="/room/modify/{{ room.id }}/">edit</a>
+      </td>
+      <td class="col-1">
+        <a href="/room/delete/{{ room.id }}/">delete</a>
+      </td>
+      <td class="col-1">
+        <a href="/room/reserve/{{ room.id }}/">book</a>
+      </td>
+    </tr>
+    {% empty %}
+      <tr><td colspan="6">No rooms are available at the moment.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+<!-- table -->
+<br>
+<!-- Form -->
+<h3 style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 24px; font-weight: lighter; letter-spacing: 1px; margin-left: 20px;">Search</h3>
+<div class="card">
+  <div class="card-body">
+    <form action="/search" method="GET">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="room-name">Room name</label>
+        <input type="text" class="form-control" id="room-name" aria-describedby="room-name-help" placeholder="Room name" name="room-name">
+      </div>
+      <div class="form-group">
+        <label for="capacity">Minimal room capacity</label>
+        <input type="number" step="1" class="form-control" id="capacity" placeholder="10" name="capacity">
+      </div>
+
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="projector" id="projector">
+        <label class="form-check-label" for="projector">Projector availability.</label>
+      </div>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+  </div>
+</div>
+<!-- Form -->
+
+<!-- Footer -->
+<footer class="footer">
+      <div class="container">
+        <span class="text-muted">iam.konrad</span>
+      </div>
+    </footer>
+<!-- Footer -->
+</body>
+</html>
