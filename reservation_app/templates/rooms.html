@@ -18,6 +18,12 @@
       background-color: #f5f5f5;
     }
   </style>
+  <script>
+    $(document).ready(function() {
+      var placeholderWidth = $('#room-name').width();
+      $('.search-button').width(placeholderWidth);
+    });
+  </script>
 </head>
 <body>
 <!-- Nav -->
@@ -49,12 +55,14 @@
 
 <!-- Nav -->
 
+
 <!-- table -->
+
 <table class="table">
   <thead>
     <tr class="d-flex">
       <th scope="col" class="col-1">#</th>
-      <th scope="col" class="col-2">Name</th>
+      <th scope="col" class="col-2">Room name</th>
       <th scope="col" class="col-1">Room capacity</th>
       <th scope="col" class="col-2">Room availability</th>
       <th scope="col" class="col-5" colspan="4">Projector availability</th>
@@ -103,18 +111,18 @@
       {% csrf_token %}
       <div class="form-group">
         <label for="room-name">Room name</label>
-        <input type="text" class="form-control" id="room-name" aria-describedby="room-name-help" placeholder="Room name" name="room-name">
+        <input type="text" class="form-control" id="room-name" aria-describedby="room-name-help" placeholder="Enter room name here" name="room-name">
       </div>
       <div class="form-group">
         <label for="capacity">Room capacity</label>
-        <input type="number" step="1" class="form-control" id="capacity" placeholder="10" name="capacity">
+        <input type="number" step="1" class="form-control" id="capacity" placeholder="0" name="capacity">
       </div>
 
       <div class="form-check">
         <input type="checkbox" class="form-check-input" name="projector" id="projector">
         <label class="form-check-label" for="projector">Projector availability.</label>
       </div>
-      <button type="submit" class="btn btn-primary">Search</button>
+      <button type="submit" class="btn btn-primary search-button">Search</button>
     </form>
   </div>
 </div>
@@ -123,7 +131,7 @@
 <!-- Footer -->
 <footer class="footer">
       <div class="container">
-        <span class="text-muted">iam.konrad</span>
+        <span class="text-muted">Created by: iam.konrad</span>
       </div>
     </footer>
 <!-- Footer -->

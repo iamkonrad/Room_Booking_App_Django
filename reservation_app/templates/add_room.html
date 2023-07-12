@@ -18,18 +18,29 @@
       background-color: #f5f5f5;
     }
   </style>
+  <script>
+    $(document).ready(function() {
+      var roomNameWidth = $('#room-name').width();
+      $('button[type="submit"]').width(roomNameWidth);
+    });
+  </script>
 </head>
 <body>
 
 
 <!-- Nav -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Room booking system</a>
+  <a class="navbar-brand mr-auto" href="#"></a>
+  <div class="mx-auto">
+    <a class="navbar-brand" href="#" style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 24px; font-weight: lighter; letter-spacing: 1px; text-decoration: none; color: white;">
+      Room Booking System
+    </a>
+  </div>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
+    <div class="navbar-nav ml-auto">
       <a class="nav-item nav-link active" href="/">
         <button class="btn btn-primary">Room list</button>
         <span class="sr-only">(current)</span>
@@ -49,7 +60,7 @@
       {% csrf_token %}
       <div class="form-group">
         <label for="room-name">Room name</label>
-        <input type="text" class="form-control" id="room-name" aria-describedby="room-name-help" placeholder="Nazwa sali" name="room-name">
+        <input type="text" class="form-control" id="room-name" aria-describedby="room-name-help" placeholder="Room name" name="room-name">
         <small id="room-name-help" class="form-text text-muted">Room name must be unique.</small>
       </div>
       <div class="form-group">
@@ -81,7 +92,7 @@
 <!-- Footer -->
 <footer class="footer">
       <div class="container">
-        <span class="text-muted">iam.konrad</span>
+        <span class="text-muted">Created by: iam.konrad</span>
       </div>
     </footer>
 <!-- Footer -->
