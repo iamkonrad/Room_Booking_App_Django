@@ -1,5 +1,4 @@
 import datetime
-
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import ConferenceRoom, RoomReservation
@@ -104,7 +103,7 @@ class RoomDetailsView(View):
         reservations = room.roomreservation_set.filter(date__gte=str(datetime.date.today())).order_by('date')
         return render(request, "room_details.html", context={"room": room, "reservations": reservations})
 
-    
+
 class SearchView(View):
     def get(self, request):
         name = request.GET.get("room-name")
@@ -125,3 +124,6 @@ class SearchView(View):
             room.reserved = str(datetime.date.today()) in reservation_dates
 
         return render(request, "rooms.html", context={"rooms": rooms, "date": datetime.date.today()})
+
+
+

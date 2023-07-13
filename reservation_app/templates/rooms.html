@@ -99,6 +99,7 @@
     {% empty %}
       <tr><td colspan="6">No rooms are available at the moment.</td></tr>
     {% endfor %}
+
   </tbody>
 </table>
 <!-- table -->
@@ -110,19 +111,22 @@
     <form action="/search" method="GET">
       {% csrf_token %}
       <div class="form-group">
-        <label for="room-name">Room name</label>
+        <label for="room-name">Room name:</label>
         <input type="text" class="form-control" id="room-name" aria-describedby="room-name-help" placeholder="Enter room name here" name="room-name">
       </div>
       <div class="form-group">
-        <label for="capacity">Room capacity</label>
-        <input type="number" step="1" class="form-control" id="capacity" placeholder="0" name="capacity">
+        <label for="capacity">Room capacity:</label>
+        <input type="number" step="1" class="form-control" id="capacity" placeholder="0" name="capacity" min="0" max="1000000">
       </div>
-
-      <div class="form-check">
-        <input type="checkbox" class="form-check-input" name="projector" id="projector">
-        <label class="form-check-label" for="projector">Projector availability.</label>
+      <div class="form-group">
+        <label for="reservation-date">Booking date:</label>
+        <input type="date" id="reservation-date" name="reservation-date" min="{{ date }}" max="9999-12-31" class="form-control">
       </div>
-        <button type="submit" class="btn btn-primary search-button" style="border: 3px ridge white;">Search</button>
+       <div class="form-check">
+          <input type="checkbox" class="form-check-input" name="projector" id="projector">
+          <label class="form-check-label" for="projector">Projector availability</label>
+      </div>
+      <button type="submit" class="btn btn-primary search-button" style="border: 3px ridge white;">Search</button>
     </form>
   </div>
 </div>
