@@ -10,31 +10,64 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <style>
-    .footer {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 60px; /* Set the fixed height of the footer here */
-      line-height: 60px; /* Vertically center the text there */
-      background-color: #f5f5f5;
-    }
-  </style>
+
+    <style>
+  html {
+    position: relative;
+    min-height: 100%;
+  }
+  body {
+    margin-bottom: 80px; /* Same as the height of the footer */
+  }
+  .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 80px; /* Set the fixed height of the footer here */
+    line-height: 60px; /* Vertically center the text there */
+    background-color: #f5f5f5;
+  }
+</style>
   <script>
     $(document).ready(function() {
       var placeholderWidth = $('#room-name').width();
       $('.search-button').width(placeholderWidth);
     });
+
+    let isAscending = true; // Default sort order
+
+    function toggleSortByCapacity() {
+      isAscending = !isAscending;
+      sortTableByCapacity();
+    }
+
+    function sortTableByCapacity() {
+      let table = document.getElementById("room-table");
+      let rows = Array.from(table.getElementsByTagName("tr"));
+      rows.shift(); // Remove the header row from the sorting
+      rows.sort((a, b) => {
+        let capacityA = parseInt(a.cells[2].textContent);
+        let capacityB = parseInt(b.cells[2].textContent);
+        return isAscending ? capacityA - capacityB : capacityB - capacityA;
+      });
+      rows.forEach((row) => table.appendChild(row));
+    }
+
   </script>
 </head>
 <body>
+
+
 <!-- Nav -->
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #195AC0;">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #195AC0; height: 80px;">
   <a class="navbar-brand mr-auto" href="http://127.0.0.1:8000/"></a>
   <div class="mx-auto">
     <a class="navbar-brand" href="http://127.0.0.1:8000/" style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 24px; font-weight: lighter; letter-spacing: 1px; text-decoration: none; color: white;">
       Room Booking System
     </a>
+    <span style="font-size: 18px; color: white;">
+      {% now "j F Y" %}
+    </span>
   </div>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -57,13 +90,20 @@
 
 
 <!-- table -->
-
-<table class="table">
+<table class="table" id="room-table">
   <thead>
     <tr class="d-flex">
       <th scope="col" class="col-1">#</th>
       <th scope="col" class="col-2">Room name</th>
-      <th scope="col" class="col-1">Room capacity</th>
+      <th scope="col" class="col-1">
+        Room capacity
+        <button onclick="toggleSortByCapacity()">
+          <span>&#x25B2;</span>
+        </button>
+        <button onclick="toggleSortByCapacity()">
+          <span>&#x25BC;</span>
+        </button>
+      </th>
       <th scope="col" class="col-2">Room availability</th>
       <th scope="col" class="col-5" colspan="4">Projector availability</th>
     </tr>
@@ -71,7 +111,7 @@
   <tbody>
     {% for room in rooms %}
     <tr class="d-flex">
-      <th scope="row" class="col-1">{{ room.id }}</th>
+      <th scope="row" class="col-1">{{ forloop.counter }}</th>
       <td class="col-2">
         <a href="/room/{{ room.id }}/">{{ room.name }}</a>
       </td>
@@ -90,7 +130,7 @@
         <a href="/room/modify/{{ room.id }}/">edit</a>
       </td>
       <td class="col-1">
-        <a href="/room/delete/{{ room.id }}/">delete</a>
+        <a href="/room/delete/{{ room.id }}/" onclick="return confirm('Are you sure you want to delete this room?');">delete</a>
       </td>
       <td class="col-1">
         <a href="/room/reserve/{{ room.id }}/">book</a>
@@ -99,9 +139,15 @@
     {% empty %}
       <tr><td colspan="6">No rooms are available at the moment.</td></tr>
     {% endfor %}
-
   </tbody>
+  <style>
+    table {
+      overflow-y: scroll;
+    }
+  </style>
 </table>
+
+
 <!-- table -->
 <br>
 <!-- Form -->
@@ -134,11 +180,11 @@
 
 <!-- Footer -->
 
-<footer class="footer">
-      <div class="container">
-        <span class="text-muted">Created by: iam.konrad</span>
-      </div>
-    </footer>
+<footer class="footer" style="background-color: #195AC0;">
+  <div class="container">
+    <span class="text-muted" style="color: white;"><span style="color: white;">Created by:iam.konrad 2023 </span></span>
+  </div>
+</footer>
 <!-- Footer -->
 </body>
 </html>

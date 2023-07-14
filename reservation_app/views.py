@@ -15,11 +15,11 @@ class AddRoomView(View):
         projector = request.POST.get("projector") == "on"
 
         if not name:
-            return render(request, "add_room.html", context={"error": "Nie podano nawy sali"})
+            return render(request, "add_room.html", context={"error": "Room name has not been specified."})
         if capacity <= 0:
-            return render(request, "add_room.html", context={"error": "Pojemność sali musi być dodatnia"})
+            return render(request, "add_room.html", context={"error": "Room capacity must be positive."})
         if ConferenceRoom.objects.filter(name=name).first():
-            return render(request, "add_room.html", context={"error": "Sala o podanej nazwie istnieje"})
+            return render(request, "add_room.html", context={"error": "Such room already exists."})
 
         ConferenceRoom.objects.create(name=name, capacity=capacity, projector_availability=projector)
         return redirect("room-list")
@@ -30,7 +30,11 @@ class RoomListView(View):
         for room in rooms:
             reservation_dates = [reservation.date for reservation in room.roomreservation_set.all()]
             room.reserved = datetime.date.today() in reservation_dates
-        return render(request, "rooms.html", context={"rooms": rooms})
+
+        current_date = datetime.date.today()
+
+        return render(request, "rooms.html", context={"rooms": rooms, "current_date": current_date})
+
 
 
 class DeleteRoomView(View):
@@ -84,7 +88,7 @@ class ReservationView(View):
 
         date_object = datetime.datetime.strptime(date, '%Y-%m-%d').date()
 
-        if RoomReservation.objects.filter(room_id=room.id, date=date):
+        if RoomReservation.objects.filter(room_id=room, date=date):
             return render(request, "reservation.html", context={"room": room,
                                                                 "reservations": reservations,
                                                                 "error": "This room has already been booked!"})
@@ -93,7 +97,7 @@ class ReservationView(View):
                                                                 "reservations": reservations,
                                                                 "error": "Incorrect date."})
 
-        RoomReservation.objects.create(room_id=room.id, date=date, comment=comment)
+        RoomReservation.objects.create(room_id=room, date=date, comment=comment)
         return redirect("room-list")
 
 
