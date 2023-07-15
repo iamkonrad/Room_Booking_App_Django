@@ -36,7 +36,6 @@ class RoomListView(View):
         return render(request, "rooms.html", context={"rooms": rooms, "current_date": current_date})
 
 
-
 class DeleteRoomView(View):
     def get(self, request, room_id):
         room = ConferenceRoom.objects.get(id=room_id)
@@ -128,6 +127,4 @@ class SearchView(View):
             room.reserved = str(datetime.date.today()) in reservation_dates
 
         return render(request, "rooms.html", context={"rooms": rooms, "date": datetime.date.today()})
-
-
 

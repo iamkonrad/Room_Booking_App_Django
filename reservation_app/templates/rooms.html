@@ -62,12 +62,37 @@
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #195AC0; height: 80px;">
   <a class="navbar-brand mr-auto" href="http://127.0.0.1:8000/"></a>
   <div class="mx-auto">
-    <a class="navbar-brand" href="http://127.0.0.1:8000/" style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 24px; font-weight: lighter; letter-spacing: 1px; text-decoration: none; color: white;">
+    <a class="navbar-brand" href="http://127.0.0.1:8000/" style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 30px; font-weight: lighter; letter-spacing: 1px; text-decoration: none; color: white;">
       Room Booking System
     </a>
-    <span style="font-size: 18px; color: white;">
-      {% now "j F Y" %}
-    </span>
+<span id="current-date" style="font-size: 18px; color: white;"></span>
+<span id="current-time" style="font-size: 18px; color: white;"></span>
+
+<script>
+  function updateDateTime() {
+    var currentDateTime = new Date();
+    var formattedDate = formatDate(currentDateTime);
+    var formattedTime = formatTime(currentDateTime);
+
+    var dateTimeString = formattedDate + ", " + formattedTime;
+
+    document.getElementById("current-date").innerText = dateTimeString;
+  }
+
+  function formatDate(date) {
+    var options = { day: 'numeric', month: 'long', year: 'numeric' };
+    return date.toLocaleDateString(undefined, options);
+  }
+
+  function formatTime(date) {
+    var options = { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false };
+    return date.toLocaleTimeString(undefined, options);
+  }
+
+  setInterval(updateDateTime, 1000);
+
+  updateDateTime();
+</script>
   </div>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
