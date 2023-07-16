@@ -130,7 +130,9 @@
         </button>
       </th>
       <th scope="col" class="col-2">Room availability</th>
-      <th scope="col" class="col-5" colspan="4">Projector availability</th>
+      <th scope="col" class="col-2">Projector availability</th>
+      <th scope="col" class="col-1">Room rating</th>
+      <th scope="col" class="col-3" colspan="3"></th>
     </tr>
   </thead>
   <tbody>
@@ -151,25 +153,19 @@
       {% else %}
         <td class="col-2" style="color:red;">&#10060;</td>
       {% endif %}
-      <td class="col-1">
-        <a href="/room/modify/{{ room.id }}/">edit</a>
-      </td>
-      <td class="col-1">
-        <a href="/room/delete/{{ room.id }}/" onclick="return confirm('Are you sure you want to delete this room?');">delete</a>
-      </td>
-      <td class="col-1">
-        <a href="/room/reserve/{{ room.id }}/">book</a>
+      <td class="col-1">{{ room.rating }}</td>
+      <td class="col-3">
+        <div class="btn-group" role="group" aria-label="">
+          <a href="/room/modify/{{ room.id }}/" class="btn btn-primary">Edit</a>
+          <a href="/room/delete/{{ room.id }}/" onclick="return confirm('Are you sure you want to delete this room?');" class="btn btn-danger">Delete</a>
+          <a href="/room/reserve/{{ room.id }}/" class="btn btn-success">Book</a>
+        </div>
       </td>
     </tr>
     {% empty %}
-      <tr><td colspan="6">No rooms are available at the moment.</td></tr>
+      <tr><td colspan="7">No rooms are available at the moment.</td></tr>
     {% endfor %}
   </tbody>
-  <style>
-    table {
-      overflow-y: scroll;
-    }
-  </style>
 </table>
 
 
