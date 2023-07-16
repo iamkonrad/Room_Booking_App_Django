@@ -28,32 +28,99 @@
     background-color: #f5f5f5;
   }
 </style>
-  <script>
-    $(document).ready(function() {
-      var placeholderWidth = $('#room-name').width();
-      $('.search-button').width(placeholderWidth);
+<script>
+  $(document).ready(function() {
+    var placeholderWidth = $('#room-name').width();
+    $('.search-button').width(placeholderWidth);
+  });
+
+  let isAscending = true;
+
+  function toggleSortByName() {
+    isAscending = !isAscending;
+    sortTableByName();
+  }
+
+  function sortTableByName() {
+    let table = document.getElementById("room-table");
+    let rows = Array.from(table.getElementsByTagName("tr"));
+    rows.shift(); // Remove the header row from the sorting
+    rows.sort((a, b) => {
+      let nameA = a.cells[1].textContent;
+      let nameB = b.cells[1].textContent;
+      return isAscending ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
     });
+    rows.forEach((row) => table.appendChild(row));
+  }
 
-    let isAscending = true; // Default sort order
+  function toggleSortByCapacity() {
+    isAscending = !isAscending;
+    sortTableByCapacity();
+  }
 
-    function toggleSortByCapacity() {
-      isAscending = !isAscending;
-      sortTableByCapacity();
-    }
+  function sortTableByCapacity() {
+    let table = document.getElementById("room-table");
+    let rows = Array.from(table.getElementsByTagName("tr"));
+    rows.shift(); // Remove the header row from the sorting
+    rows.sort((a, b) => {
+      let capacityA = parseInt(a.cells[2].textContent);
+      let capacityB = parseInt(b.cells[2].textContent);
+      return isAscending ? capacityA - capacityB : capacityB - capacityA;
+    });
+    rows.forEach((row) => table.appendChild(row));
+  }
 
-    function sortTableByCapacity() {
-      let table = document.getElementById("room-table");
-      let rows = Array.from(table.getElementsByTagName("tr"));
-      rows.shift(); // Remove the header row from the sorting
-      rows.sort((a, b) => {
-        let capacityA = parseInt(a.cells[2].textContent);
-        let capacityB = parseInt(b.cells[2].textContent);
-        return isAscending ? capacityA - capacityB : capacityB - capacityA;
-      });
-      rows.forEach((row) => table.appendChild(row));
-    }
+  function toggleSortByAvailability() {
+    isAscending = !isAscending;
+    sortTableByAvailability();
+  }
 
-  </script>
+  function sortTableByAvailability() {
+    let table = document.getElementById("room-table");
+    let rows = Array.from(table.getElementsByTagName("tr"));
+    rows.shift(); // Remove the header row from the sorting
+    rows.sort((a, b) => {
+      let availabilityA = a.cells[3].textContent;
+      let availabilityB = b.cells[3].textContent;
+      return isAscending ? availabilityA.localeCompare(availabilityB) : availabilityB.localeCompare(availabilityA);
+    });
+    rows.forEach((row) => table.appendChild(row));
+  }
+
+  function toggleSortByProjector() {
+    isAscending = !isAscending;
+    sortTableByProjector();
+  }
+
+  function sortTableByProjector() {
+    let table = document.getElementById("room-table");
+    let rows = Array.from(table.getElementsByTagName("tr"));
+    rows.shift(); // Remove the header row from the sorting
+    rows.sort((a, b) => {
+      let projectorA = a.cells[4].textContent;
+      let projectorB = b.cells[4].textContent;
+      return isAscending ? projectorA.localeCompare(projectorB) : projectorB.localeCompare(projectorA);
+    });
+    rows.forEach((row) => table.appendChild(row));
+  }
+
+  function toggleSortByRating() {
+    isAscending = !isAscending;
+    sortTableByRating();
+  }
+
+  function sortTableByRating() {
+    let table = document.getElementById("room-table");
+    let rows = Array.from(table.getElementsByTagName("tr"));
+    rows.shift(); // Remove the header row from the sorting
+    rows.sort((a, b) => {
+      let ratingA = parseFloat(a.cells[5].textContent);
+      let ratingB = parseFloat(b.cells[5].textContent);
+      return isAscending ? ratingA - ratingB : ratingB - ratingA;
+    });
+    rows.forEach((row) => table.appendChild(row));
+  }
+</script>
 </head>
 <body>
 
@@ -121,24 +188,74 @@
     <thead>
       <tr class="d-flex">
         <th scope="col" class="col-1">#</th>
-        <th scope="col" class="col-2">Room name</th>
-<th scope="col" class="col-1">
-  <div style="display: flex; align-items: center;">
-    <div class="sort-buttons" style="display: flex; flex-direction: column; margin-right: 5px;">
-      <button class="btn btn-sm btn-sort" style="padding: 0; background: transparent; border: none; color: #6c757d;" onclick="toggleSortByCapacity()">
-        <span class="sort-icon" style="font-size: 1rem;">&#x25B2;</span>
-      </button>
-      <button class="btn btn-sm btn-sort" style="padding: 0; background: transparent; border: none; color: #6c757d;" onclick="toggleSortByCapacity()">
-        <span class="sort-icon" style="font-size: 1rem;">&#x25BC;</span>
-      </button>
-    </div>
-    <span>Room capacity</span>
-  </div>
-</th>
-        <th scope="col" class="col-2">Room availability</th>
-        <th scope="col" class="col-2">Projector availability</th>
-        <th scope="col" class="col-1">Room rating</th>
+        <th scope="col" class="col-2">
+          <div style="display: flex; align-items: center;">
+            <div class="sort-buttons" style="display: flex; flex-direction: column; margin-right: 5px;">
+              <button class="btn btn-sm btn-sort" style="padding: 0; background: transparent; border: none; color: #6c757d;" onclick="toggleSortByName()">
+                <span class="sort-icon" style="font-size: 1rem;">&#x25B2;</span>
+              </button>
+              <button class="btn btn-sm btn-sort" style="padding: 0; background: transparent; border: none; color: #6c757d;" onclick="toggleSortByName()">
+                <span class="sort-icon" style="font-size: 1rem;">&#x25BC;</span>
+              </button>
+            </div>
+            <span>Room name</span>
+          </div>
+        </th>
+        <th scope="col" class="col-1">
+          <div style="display: flex; align-items: center;">
+            <div class="sort-buttons" style="display: flex; flex-direction: column; margin-right: 5px;">
+              <button class="btn btn-sm btn-sort" style="padding: 0; background: transparent; border: none; color: #6c757d;" onclick="toggleSortByCapacity()">
+                <span class="sort-icon" style="font-size: 1rem;">&#x25B2;</span>
+              </button>
+              <button class="btn btn-sm btn-sort" style="padding: 0; background: transparent; border: none; color: #6c757d;" onclick="toggleSortByCapacity()">
+                <span class="sort-icon" style="font-size: 1rem;">&#x25BC;</span>
+              </button>
+            </div>
+            <span>Room capacity</span>
+          </div>
+        </th>
+        <th scope="col" class="col-2">
+          <div style="display: flex; align-items: center;">
+            <div class="sort-buttons" style="display: flex; flex-direction: column; margin-right: 5px;">
+              <button class="btn btn-sm btn-sort" style="padding: 0; background: transparent; border: none; color: #6c757d;" onclick="toggleSortByAvailability()">
+                <span class="sort-icon" style="font-size: 1rem;">&#x25B2;</span>
+              </button>
+              <button class="btn btn-sm btn-sort" style="padding: 0; background: transparent; border: none; color: #6c757d;" onclick="toggleSortByAvailability()">
+                <span class="sort-icon" style="font-size: 1rem;">&#x25BC;</span>
+              </button>
+            </div>
+            <span>Room availability</span>
+          </div>
+        </th>
+        <th scope="col" class="col-2">
+          <div style="display: flex; align-items: center;">
+            <div class="sort-buttons" style="display: flex; flex-direction: column; margin-right: 5px;">
+              <button class="btn btn-sm btn-sort" style="padding: 0; background: transparent; border: none; color: #6c757d;" onclick="toggleSortByProjector()">
+                <span class="sort-icon" style="font-size: 1rem;">&#x25B2;</span>
+              </button>
+              <button class="btn btn-sm btn-sort" style="padding: 0; background: transparent; border: none; color: #6c757d;" onclick="toggleSortByProjector()">
+                <span class="sort-icon" style="font-size: 1rem;">&#x25BC;</span>
+              </button>
+            </div>
+            <span>Projector availability</span>
+          </div>
+        </th>
+        <th scope="col" class="col-1">
+          <div style="display: flex; align-items: center;">
+            <div class="sort-buttons" style="display: flex; flex-direction: column; margin-right: 5px;">
+              <button class="btn btn-sm btn-sort" style="padding: 0; background: transparent; border: none; color: #6c757d;" onclick="toggleSortByRating()">
+                <span class="sort-icon" style="font-size: 1rem;">&#x25B2;</span>
+              </button>
+              <button class="btn btn-sm btn-sort" style="padding: 0; background: transparent; border: none; color: #6c757d;" onclick="toggleSortByRating()">
+                <span class="sort-icon" style="font-size: 1rem;">&#x25BC;</span>
+              </button>
+            </div>
+            <span>Room rating</span>
+          </div>
+        </th>
         <th scope="col" class="col-3" colspan="3"></th>
+      </tr>
+    </thead>
       </tr>
     </thead>
     <tbody>
