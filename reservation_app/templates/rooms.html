@@ -122,15 +122,19 @@
       <tr class="d-flex">
         <th scope="col" class="col-1">#</th>
         <th scope="col" class="col-2">Room name</th>
-        <th scope="col" class="col-1">
-          Room capacity
-          <button onclick="toggleSortByCapacity()">
-            <span>&#x25B2;</span>
-          </button>
-          <button onclick="toggleSortByCapacity()">
-            <span>&#x25BC;</span>
-          </button>
-        </th>
+<th scope="col" class="col-1">
+  <div style="display: flex; align-items: center;">
+    <div class="sort-buttons" style="display: flex; flex-direction: column; margin-right: 5px;">
+      <button class="btn btn-sm btn-sort" style="padding: 0; background: transparent; border: none; color: #6c757d;" onclick="toggleSortByCapacity()">
+        <span class="sort-icon" style="font-size: 1rem;">&#x25B2;</span>
+      </button>
+      <button class="btn btn-sm btn-sort" style="padding: 0; background: transparent; border: none; color: #6c757d;" onclick="toggleSortByCapacity()">
+        <span class="sort-icon" style="font-size: 1rem;">&#x25BC;</span>
+      </button>
+    </div>
+    <span>Room capacity</span>
+  </div>
+</th>
         <th scope="col" class="col-2">Room availability</th>
         <th scope="col" class="col-2">Projector availability</th>
         <th scope="col" class="col-1">Room rating</th>
